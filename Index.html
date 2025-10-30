@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Технические Работы</title>
+    <style>
+        /* Подключение шрифта Benzin */
+        @font-face {
+            font-family: 'Benzin';
+            src: url('./benzin.ttf') format('truetype');
+            font-display: swap;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* Красный глоу (справа сверху) - анимация scale */
+        .glow-ellipse-red-scale {
+            position: absolute;
+            top: -300px;
+            right: -150px;
+            width: 1200px;
+            height: 1000px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 0, 0, 0.5) 0%,
+                rgba(255, 50, 50, 0.3) 30%,
+                rgba(0,0,0,0) 70%
+            );
+            filter: blur(60px);
+            animation: pulse 4s infinite alternate;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeInGlow 1.5s forwards 0.5s;
+        }
+
+        /* Красный глоу (слева снизу) */
+        .glow-ellipse-blue {
+            position: absolute;
+            bottom: -300px;
+            left: -150px;
+            width: 1200px;
+            height: 1000px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 0, 0, 0.5) 0%,
+                rgba(255, 50, 50, 0.3) 30%,
+                rgba(0,0,0,0) 70%
+            );
+            filter: blur(60px);
+            animation: pulse 4s infinite alternate-reverse;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeInGlow 1.5s forwards 0.6s;
+        }
+
+        /* Красный глоу (появляется и исчезает) */
+        .glow-ellipse-red-fade {
+            position: absolute;
+            top: -300px;
+            right: -150px;
+            width: 1200px;
+            height: 1000px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 0, 0, 0.4) 0%,
+                rgba(255, 50, 50, 0.2) 30%,
+                rgba(0,0,0,0) 70%
+            );
+            filter: blur(60px);
+            animation: fadeInOut 3s infinite alternate;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeInGlow 1.5s forwards 0.7s;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0.1;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Анимация появления для глоу */
+        @keyframes fadeInGlow {
+            to { opacity: 1; }
+        }
+
+        .content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Benzin', 'Montserrat', sans-serif;
+            color: #ff0000;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            letter-spacing: 1px;
+            animation: glowPulse 0.8s ease-out forwards;
+        }
+
+        /* Эффект увеличения глоу текста */
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 30px rgba(255, 0, 0, 1);
+                filter: brightness(1.5);
+            }
+            70% {
+                text-shadow: 0 0 60px rgba(255, 0, 0, 1);
+                filter: brightness(2);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+                filter: brightness(1);
+            }
+        }
+
+        .links-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        a {
+            color: #aaa;
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            text-decoration: none;
+            transition: color 0.3s;
+            opacity: 0;
+            animation: fadeInLink 1s forwards;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        @keyframes fadeInLink {
+            to { opacity: 1; }
+        }
+
+        /* Индивидуальные задержки для ссылок */
+        .link-1 {
+            animation-delay: 1.2s;
+        }
+
+        .link-2 {
+            animation-delay: 1.4s;
+        }
+
+        .link-3 {
+            animation-delay: 1.6s;
+        }
+
+        /* Партиклы */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0;
+            animation: fadeInParticles 1.5s forwards 0.8s;
+        }
+
+        @keyframes fadeInParticles {
+            to { opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Анимированные глоу (с fade-анимацией) -->
+    <div class="glow-ellipse-red-scale"></div>
+    <div class="glow-ellipse-blue"></div>
+    <div class="glow-ellipse-red-fade"></div>
+
+    <div id="particles-js"></div>
+
+    <div class="content">
+        <h1>Технические Работы</h1>
+        <div class="links-container">
+            <a class="link-1" href="https://t.me/revivedlc" target="_blank">t.me/revivedlc</a>
+            <a class="link-2" href="https://dsg.cc/revivedlc" target="_blank">dsg.cc/revivedlc</a>
+            <a class="link-3" href="https://guns.lol/vsexar" target="_blank">guns.lol/vsexar</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 60,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 2,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 120,
+                    "color": "#ffffff",
+                    "opacity": 0.15,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1.5,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
